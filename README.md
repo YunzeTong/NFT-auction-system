@@ -1,70 +1,107 @@
-# Getting Started with Create React App
+# Tyz's Big Homework
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 环境
 
-## Available Scripts
+- 操作系统：Windows 10
+- IDE: VS Code
+- node v14.18.1
+- yarn 1.22.15
+- truffle v5.4.15
+- ipfs v0.10.0
 
-In the project directory, you can run:
+### 运行方法
 
-### `yarn start`
+1. 启用ganache，新建workspace或者quickstart皆可，右上角点击图标，在workspace里面选择add project,选择项目的truffle-config.js，随后检查server里的配置要与truffle-config.js一致，再点击save and restart
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. 在进行编译solidity文件前，右键选择change workspace compiler version，换成0.5.16。然后在本地终端进行truffle compile(也可以不做这一步，因为truffle migrate也会做编译)，随后进行truffle migrate，此时ganache的contracts下面的合约对应的地址便生成了，将其复制并粘贴到src/contract.jsx中的
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+   ```javascript
+   let address = '0x7e150E2FE8d71c0Bc65dBFDb86ddF0A9aB6c9111'
+   ```
 
-### `yarn test`
+   中进行填充。然后src/contract.jsx里引用的bid.json需要手动复制经过compile后的bid.json并粘贴到contract.jsx所在的目录下（require不允许导入父目录以上的目录的文件），核心是获取到bid.json的abi。
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. 随后可以进行yarn start启用。
 
-### `yarn build`
+4. 前端加载完毕后将ganache显示的账户中导入几个私钥到metamask中,metamask要与localhost:8545连接
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+5. 本地终端输入ipfs daemon开启节点，用于上传图片。
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+### 关于ipfs的配置
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+ipfs第一次下载后需要执行一次
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```sh
+ipfs init
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+，然后出现过以下提示，只要跟着做就行了
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![image-20211029141049083](readme.assets/image-20211029141049083.png)
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+另外，我是在windows环境下完成的作业，ipfs还需要进行一些其他的配置，参考了https://blog.csdn.net/Phather/article/details/104240781和https://github.com/ipfs/go-ipfs/issues/2034进行了一些配置
 
-### Code Splitting
+![image-20211029141332384](readme.assets/image-20211029141332384.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+否则不能跨域，作业运行不了
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+### 运行成功后的界面截图
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### 初始界面
 
-### Advanced Configuration
+![image-20211029141604330](readme.assets/image-20211029141604330.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### “我的nft”界面
 
-### Deployment
+##### 经过铸造nft和一些拍卖后的界面
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+![image-20211029141724948](readme.assets/image-20211029141724948.png)
 
-### `yarn build` fails to minify
+##### 铸造nft
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![image-20211029141815984](readme.assets/image-20211029141815984.png)
+
+##### 发起拍卖
+
+![image-20211029141856199](readme.assets/image-20211029141856199.png)
+
+#### “拍卖市场”界面
+
+##### 主界面
+
+![image-20211029142053219](readme.assets/image-20211029142053219.png)
+
+##### 竞价界面
+
+![image-20211029142128044](readme.assets/image-20211029142128044.png)
+
+##### 查看持有人~~（为了图省事直接把视频中的一帧拿出来当截图了）~~
+
+![image-20211029142223777](readme.assets/image-20211029142223777.png)
+
+#### 我参与的拍卖界面
+
+~~（为了图省事和展示全继续把视频中的若干帧拿出来当截图）~~
+
+##### 和当前账号相关的未结束的拍卖
+
+![image-20211029142811741](readme.assets/image-20211029142811741.png)
+
+
+
+##### 和当前账号相关的已经结束的拍卖
+
+![image-20211029142751730](readme.assets/image-20211029142751730.png)
+
+
+
+##### 预览图片
+
+![image-20211029143402171](readme.assets/image-20211029143402171.png)
+
